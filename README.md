@@ -14,6 +14,8 @@ Note the missing `i` in the gem name. The name `registry` is taken by another ge
 ## Usage
 
 ```ruby
+require 'registry'
+
 class Obj
   include Registry
 end
