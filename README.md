@@ -1,4 +1,4 @@
-# Registry
+# Registry [![Build Status](https://travis-ci.org/svenfuchs/registry.svg?branch=master)](https://travis-ci.org/svenfuchs/registry)
 
 Ruby class registry for registering, and looking up classes using a key, rather
 than the class name. Decouples looking up classes from their name and namespace.
