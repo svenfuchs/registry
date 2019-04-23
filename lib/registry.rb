@@ -78,7 +78,7 @@ module Registry
     end
 
     def lookup(key)
-      registries[key]
+      registered?(key) ? self[key] : registries[key]
     end
 
     def [](key)

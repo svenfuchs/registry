@@ -8,7 +8,6 @@ describe Registry, 'sub registries' do
 
   let!(:sub) do
     Class.new(base) do
-      # include Registry
       registry :sub
       register :sub
     end
@@ -64,6 +63,72 @@ describe Registry, 'sub registries' do
     describe 'instance' do
       subject { const.new }
       it { should have registry_key: :sub }
+    end
+  end
+
+  describe 'sub classes with conflicting keys' do
+    let!(:one) do
+      Class.new(base) do
+        registry :one
+        register :key
+      end
+    end
+
+    let!(:two) do
+      Class.new(base) do
+        registry :two
+        register :key
+      end
+    end
+
+    describe ':one' do
+      let(:const) { one }
+
+      describe 'class' do
+        subject { one }
+
+        it { should have registry_key: :key }
+        it { should have registry_name: :one }
+
+        it { should access :key, one }
+        it { expect { subject[:two] }.to raise_error Registry::UnknownKey }
+
+        it { should lookup :key, one }
+        it { expect { subject.lookup(:unknown) }.to raise_error Registry::UnknownKey }
+
+        it { should be_registered :key }
+        it { should_not be_registered :unknown }
+      end
+
+      describe 'instance' do
+        subject { const.new }
+        it { should have registry_key: :key }
+      end
+    end
+
+    describe 'two' do
+      let(:const) { two }
+
+      describe 'class' do
+        subject { two }
+
+        it { should have registry_key: :key }
+        it { should have registry_name: :two }
+
+        it { should access :key, two }
+        it { expect { subject[:one] }.to raise_error Registry::UnknownKey }
+
+        it { should lookup :key, two }
+        it { expect { subject.lookup(:unknown) }.to raise_error Registry::UnknownKey }
+
+        it { should be_registered :key }
+        it { should_not be_registered :unknown }
+      end
+
+      describe 'instance' do
+        subject { const.new }
+        it { should have registry_key: :key }
+      end
     end
   end
 end
