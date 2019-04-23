@@ -9,7 +9,7 @@ describe Registry, 'sub registries' do
   let!(:sub) do
     Class.new(base) do
       # include Registry
-      registry_name :sub
+      registry :sub
       register :sub
     end
   end

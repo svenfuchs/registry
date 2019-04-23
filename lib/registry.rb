@@ -85,8 +85,8 @@ module Registry
       registry[key&.to_sym] || fail(MSGS[:unknown] % [key, registry.keys.sort])
     end
 
-    def registry
-      @registry ||= registries.registry(registry_name)
+    def registry(name = nil)
+      name ? registry_name(name) : @registry ||= registries.registry(registry_name)
     end
 
     def registry_name(name = nil)
