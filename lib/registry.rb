@@ -62,7 +62,8 @@ module Registry
       base.send(:extend, ClassMethods)
       base.send(:include, InstanceMethods)
 
-      name = base.name.to_s.split('::').last&.downcase&.to_sym || :default
+      name = base.name.to_s.split('::').last
+      name = name ? name.downcase.to_sym : :default
       base.instance_variable_set(:@registry_name, name)
 
       base.instance_variable_set(:@registries, Registries.new)
@@ -78,7 +79,7 @@ module Registry
     end
 
     def registered?(key)
-      registry.key?(key&.to_sym)
+      registry.key?(key && key.to_sym)
     end
 
     def lookup(key)
@@ -86,7 +87,7 @@ module Registry
     end
 
     def [](key)
-      registry[key&.to_sym] || fail(MSGS[:unknown] % [key, registry.keys.sort])
+      registry[key && key.to_sym] || fail(MSGS[:unknown] % [key, registry.keys.sort])
     end
 
     def registry(name = nil)
