@@ -78,7 +78,7 @@ module Registry
     end
 
     def registered?(key)
-      registry.key?(key)
+      registry.key?(key&.to_sym)
     end
 
     def lookup(key)
