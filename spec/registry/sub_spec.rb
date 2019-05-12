@@ -32,6 +32,12 @@ describe Registry, 'sub registries' do
       it { should be_registered :base }
       it { should_not be_registered :sub }
       it { should_not be_registered :unknown }
+
+      describe 'unregister' do
+        before { subject.unregister }
+        it { should have registry_key: nil }
+        it { should_not be_registered nil }
+      end
     end
 
     describe 'instance' do
@@ -58,6 +64,12 @@ describe Registry, 'sub registries' do
       it { should be_registered :sub }
       it { should_not be_registered :base }
       it { should_not be_registered :unknown }
+
+      describe 'unregister' do
+        before { subject.unregister }
+        it { should have registry_key: nil }
+        it { should_not be_registered nil }
+      end
     end
 
     describe 'instance' do

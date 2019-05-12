@@ -48,6 +48,10 @@ module Registry
       key && objects[key.to_sym] || raise(UnknownKey, MSGS[:unknown] % [key, objects.keys.sort])
     end
 
+    def delete(key)
+      objects.delete(key)
+    end
+
     def objects
       @objects ||= {}
     end
@@ -76,6 +80,11 @@ module Registry
     def register(key, obj = self)
       obj.instance_variable_set(:@registry_key, key)
       registry[key] = obj
+    end
+
+    def unregister(obj = self)
+      registry.delete(obj.registry_key)
+      obj.remove_instance_variable(:@registry_key)
     end
 
     def registered?(key)
