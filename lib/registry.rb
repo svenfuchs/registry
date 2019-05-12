@@ -51,6 +51,10 @@ module Registry
     def objects
       @objects ||= {}
     end
+
+    def clear
+      objects.clear
+    end
   end
 
   class << self
