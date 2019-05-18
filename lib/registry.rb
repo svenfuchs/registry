@@ -85,7 +85,7 @@ module Registry
     end
 
     def unregister(obj = self)
-      return unless obj.registry_key
+      return unless obj.respond_to?(:registry_key) && obj.registry_key
       registry.delete(obj.registry_key)
       obj.remove_instance_variable(:@registry_key)
     end
