@@ -78,7 +78,6 @@ module Registry
     attr_reader :registry_key
 
     def register(key, obj = self)
-      unregister(obj)
       key = key.to_sym
       obj.instance_variable_set(:@registry_key, key)
       registry[key] = obj
