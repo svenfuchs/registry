@@ -102,7 +102,7 @@ module Registry
     end
 
     def registry(name = nil)
-      name ? registry_name(name) : @registry ||= registries.registry(registry_name)
+      @registry ||= registries.registry(registry_name(name))
     end
 
     def registry_name(name = nil)
