@@ -6,9 +6,9 @@ describe Registry, 'a single registry' do
     end
   end
 
-  let!(:sub) do
+  let!(:one) do
     Class.new(base) do
-      register :sub
+      register :one, :two
     end
   end
 
@@ -22,10 +22,12 @@ describe Registry, 'a single registry' do
       it { should have registry_name: :default }
 
       it { should access :base, base }
-      it { should access :sub, sub }
+      it { should access :one, one }
+      it { should access :two, one }
 
       it { should be_registered :base }
-      it { should be_registered :sub }
+      it { should be_registered :one }
+      it { should be_registered :two }
       it { should_not be_registered :unknown }
 
       describe 'unregister' do
@@ -42,18 +44,20 @@ describe Registry, 'a single registry' do
   end
 
   describe 'sub class' do
-    let(:const) { sub }
+    let(:const) { one }
 
     describe 'class' do
       subject { const }
-      it { should have registry_key: :sub }
+      it { should have registry_key: :one }
       it { should have registry_name: :default }
 
       it { should access :base, base }
-      it { should access :sub, sub }
+      it { should access :one, one }
+      it { should access :two, one }
 
       it { should be_registered :base }
-      it { should be_registered :sub }
+      it { should be_registered :one }
+      it { should be_registered :two }
       it { should_not be_registered :unknown }
 
       describe 'unregister' do
@@ -65,7 +69,7 @@ describe Registry, 'a single registry' do
 
     describe 'instance' do
       subject { const.new }
-      it { should have registry_key: :sub }
+      it { should have registry_key: :one }
     end
   end
 end
