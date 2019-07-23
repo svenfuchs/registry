@@ -78,7 +78,7 @@ module Registry
     attr_reader :registry_key
 
     def register(*args)
-      obj = !args.last.is_a?(Symbol) ? args.pop : self
+      obj = !(args.last.is_a?(Symbol) || args.last.is_a?(String)) ? args.pop : self
       args.reverse.map(&:to_sym).each do |key|
         obj.instance_variable_set(:@registry_key, key)
         registry[key] = obj
