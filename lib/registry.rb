@@ -83,6 +83,7 @@ module Registry
         obj.instance_variable_set(:@registry_key, key)
         registry[key] = obj
       end
+      self
     end
 
     def unregister(obj = self)
