@@ -19,6 +19,7 @@ describe Registry, 'a single registry' do
       subject { const }
 
       it { should have registry_key: :base }
+      it { should have registry_keys: %i(base) }
       it { should have registry_name: :default }
 
       it { should access :base, base }
@@ -49,6 +50,7 @@ describe Registry, 'a single registry' do
     describe 'class' do
       subject { const }
       it { should have registry_key: :one }
+      it { should have registry_keys: %i(one two) }
       it { should have registry_name: :default }
 
       it { should access :base, base }

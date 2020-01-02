@@ -75,11 +75,13 @@ module Registry
   end
 
   module ClassMethods
-    attr_reader :registry_key
+    attr_reader :registry_key, :registry_keys
 
     def register(*args)
       obj = !(args.last.is_a?(Symbol) || args.last.is_a?(String)) ? args.pop : self
-      args.reverse.map(&:to_sym).each do |key|
+      keys = args.map(&:to_sym)
+      obj.instance_variable_set(:@registry_keys, keys)
+      keys.reverse.each do |key|
         obj.instance_variable_set(:@registry_key, key)
         registry[key] = obj
       end
@@ -120,6 +122,10 @@ module Registry
   module InstanceMethods
     def registry_key
       self.class.registry_key
+    end
+
+    def registry_keys
+      self.class.registry_keys
     end
 
     def registry_name
